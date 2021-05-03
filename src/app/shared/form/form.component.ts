@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 import { Form } from './form.interface';
 import { Bookmark } from './../store/models/bookmark.model';
 import { AppState } from './../store/app-state.model';
-
+import { AddBookmark } from './../store/actions/bookmark.actions';
+import * as uuid from 'uuid'
 @Component({
   selector: 'app-form',
   templateUrl: './form.component.html',
@@ -20,19 +21,19 @@ export class FormComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private store: Store<AppState>) {
     this.form =  this.fb.group({
+      id: uuid(),
       name: [''],
       url: [''],
       group: ['']
     })
-    this.form$ = this.store.select(store => store.bookmarks)
   }
 
   ngOnInit(): void {
   }
 
   add(){
-    this.store.dispatch({type: 'ADD_FORM'})
-    console.log(this.form$)
+
+    this.store.dispatch(new AddBookmark(this.form.value))
   }
 
 }

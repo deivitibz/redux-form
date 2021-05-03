@@ -1,37 +1,28 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Bookmark } from '../store/models/bookmark.model';
+import { AppState } from './../store/app-state.model';
+import { Store } from '@ngrx/store';
+import { RemoveBookmark } from '../store/actions/bookmark.actions';
 
-export interface PeriodicElement {
-  position: number;
-  name: string;
-  url: string;
 
-}
-
-let ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Google', url: 'https://www.google.es' },
-  { position: 2, name: 'Facebook', url: 'https://www.facebook.com' },
-  { position: 3, name: 'Google', url: 'https://www.google.es' },
-  { position: 5, name: 'Facebook', url: 'https://www.facebook.com' },
-  { position: 6, name: 'Google', url: 'https://www.google.es' },
-  { position: 8, name: 'Facebook', url: 'https://www.facebook.com' }
-];
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss']
 })
 export class TableComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  dataSource = ELEMENT_DATA;
+  displayedColumns: string[] = ['name', 'url', 'group', 'actions'];
+  dataSource: Observable<Bookmark>;
 
-  constructor() { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
-
+    this.dataSource = this.store.select(store => store.bookmarks)
   }
 
-  delete(element: PeriodicElement) {
-    this.dataSource = this.dataSource.filter((e: PeriodicElement) => e.position !== element.position)
+  delete(element: Bookmark) {
+    this.store.dispatch(new RemoveBookmark(element.id))
   }
 
 }

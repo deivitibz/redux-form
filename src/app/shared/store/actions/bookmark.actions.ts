@@ -14,7 +14,7 @@ export class AddBookmark implements Action {
 export class RemoveBookmark implements Action {
     readonly type =  REMOVE_BOOKMARK
 
-    constructor(public payload: number) {}
+    constructor(public payload: number | string) {}
 }
 
 export type Actions = AddBookmark | RemoveBookmark

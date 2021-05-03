@@ -1,10 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 
-interface AppState {
-  message: string
-}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,17 +8,10 @@ interface AppState {
 })
 export class AppComponent implements OnInit{
 
-  message: Observable<string>;
-
-  constructor(private store: Store<AppState>){
-    this.message = this.store.select('message');
+  constructor(){
   }
 
   ngOnInit(){
-    this.spanishMessage()
   }
 
-  spanishMessage() {
-    this.store.dispatch({type: 'SPANISH'})
-  }
 }
