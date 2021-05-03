@@ -14,7 +14,7 @@ import * as uuid from 'uuid'
 })
 
 
-export class FormComponent implements OnInit {
+export class FormComponent{
 
   form: FormGroup;
   form$: Observable<Bookmark>
@@ -28,11 +28,8 @@ export class FormComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void {
-  }
 
   add(){
-
     this.store.dispatch(new AddBookmark(this.form.value))
   }
 
